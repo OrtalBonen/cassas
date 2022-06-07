@@ -1,0 +1,18 @@
+<div class="title">
+  <span *ngIf="selectedDepartment && !selectedCategory">{{selectedDepartment.name}}</span>
+  <span *ngIf="selectedCategory">{{selectedCategory.name}}</span>
+</div>
+<div class="categoriesContainer">
+  <a class="category" [ngClass]="{selected:!selectedCategory}" [routerLink]="'/department/'+selectedDepartment?.id+'/'">
+    All Products
+  </a>
+  <a class="category" [ngClass]="{selected:selectedCategory?.id===category.id}"
+    [routerLink]="'/department/'+selectedDepartment?.id+'/'+category.id"
+    *ngFor="let category of selectedDepartment?.categories">{{category.name}}
+  </a>
+</div>
+<div *ngIf="productCount" class="produCount">{{productCount}} products</div>
+<div class="notFound" *ngIf="!productCount">Products not found</div>
+<app-products-list *ngIf="productCount" [products]="products" [productCount]="productCount"
+  (pageSelected)="handlePageSelected($event)">
+</app-products-list>

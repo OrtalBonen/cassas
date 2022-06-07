@@ -1,0 +1,49 @@
+<div class="cartOutside" [ngClass]="{cartOutsideOpen: cartService.isCartOpen}" (click)="closeCart()">
+</div>
+
+<div class="cartContainer" [ngClass]="{slide: cartService.isCartOpen, notLogged: !sessionService.user}">
+  <!-- user and have items in cart -->
+  <div class="cart" *ngIf="cartService.cart?.cartItems.length">
+    <div class="headerCart">
+      <span>{{cartService.cart.cartItems.length}}
+        {{ cartService.cart.cartItems.length > 1 ? " Items" : " Item" }}
+      </span>
+      <button class="emptyBtn" (click)="emptyCart()">Empty Cart</button>
+    </div>
+    <div class="items">
+      <div class="item" *ngFor="let item of cartService.cart.cartItems">
+        <img [src]="item.previewImgUrl" alt="">
+
+        <div class="details">
+          <div class="name">{{item.name}}</div>
+          <div class="itemPrice">{{item.price |currency}}*{{item.quantity}}</div>
+          <div class="totalItem">{{item.totalPrice |currency}}</div>
+        </div>
+
+        <button class="deleteItemBtn" (click)="deleteCartItem(item.id)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="footerCart">
+      <span class="totalCart">Total: {{ cartService.cartTotalPrice | currency }}</span>
+      <button class="checkoutBtn" (click)="checkout()">Checkout</button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- not logged in user -->
+  <div class="centerFlex" *ngIf="!sessionService.user">
+    <span>For start shopping please
+      <button class="logInBtn" (click)="openLogInDialog()">Log in
+      </button>
+    </span>
+  </div>
+
+  <!-- user is logged in and doesn't have a cart or have a cart without items -->
+  <div class="centerFlex"
+    *ngIf="this.sessionService.user && (!this.cartService.cart || !this.cartService.cart?.cartItems.length)">
+    <span>Your cart is Empty</span>
+  </div>
+
+</div>

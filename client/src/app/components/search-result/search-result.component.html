@@ -1,0 +1,8 @@
+<div class="title">Search result for "{{searchWord}}"</div>
+<div *ngIf="productCount" class="produCount">{{productCount}} products</div>
+<app-products-list *ngIf="productCount" [products]="products" [productCount]="productCount"
+  (pageSelected)="handlePageSelected($event)">
+</app-products-list>
+<div class="notFound" *ngIf="!productCount">
+  Products not found
+</div>

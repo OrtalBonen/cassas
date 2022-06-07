@@ -1,0 +1,7 @@
+<div *ngIf="sessionService.isUserChecked" class="app">
+  <app-header></app-header>
+  <app-cart-side *ngIf="!sessionService.user?.isAdmin"></app-cart-side>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

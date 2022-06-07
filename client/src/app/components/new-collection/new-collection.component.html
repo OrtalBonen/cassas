@@ -1,0 +1,5 @@
+<div class="title">New Collection</div>
+
+<app-products-list *ngIf="productCount" [products]="products" [productCount]="productCount"
+  (pageSelected)="handlePageSelected($event)">
+</app-products-list>

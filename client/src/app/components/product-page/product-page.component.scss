@@ -1,0 +1,43 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  padding: 8px 46px;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.saveBtn {
+  background-color: rgb(40, 39, 39);
+  border-color: rgb(40, 39, 39);
+}
+
+.saveBtn:hover {
+  background-color: rgb(63, 62, 62);
+}
+
+.cancelBtn {
+  background-color: transparent;
+  color: rgb(40, 39, 39);
+  border: 1px solid rgb(40, 39, 39);
+}
+
+.cancelBtn:hover {
+  color: rgb(141, 137, 137);
+  border-color: rgb(141, 137, 137);
+}

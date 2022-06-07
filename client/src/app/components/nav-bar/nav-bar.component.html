@@ -1,0 +1,8 @@
+<span *ngFor="let department of departments">
+  <a mat-button [matMenuTriggerFor]="afterMenu">{{department.name}}</a>
+  <mat-menu class="openMenu" #afterMenu="matMenu" xPosition="after">
+    <a mat-menu-item [routerLink]="'/department/'+department.id">All Products</a>
+    <a class="category" [routerLink]="'/department/'+department.id+'/'+category.id"
+      *ngFor="let category of department.categories" mat-menu-item>{{category.name}}</a>
+  </mat-menu>
+</span>

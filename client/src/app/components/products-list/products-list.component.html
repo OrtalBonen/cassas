@@ -1,0 +1,14 @@
+<h1 *ngIf="!products?.length">Product not found</h1>
+<div class="container" *ngIf="products?.length">
+  <div class="products">
+    <app-product-card *ngFor="let product of products" [product]="product" (productChanged)="productChanged()">
+    </app-product-card>
+  </div>
+  <div class="paginator" *ngIf="maxPages>1">
+    <button class="changerBtn" *ngIf="currentPage>1 && maxPages>1" (click)="handleClick(currentPage-1)">-</button>
+    <button class="pageNumber" [ngClass]="{selected:page===currentPage}" (click)="handleClick(page)"
+      *ngFor="let page of pagesArray">{{page}}</button>
+    <button class="changerBtn" *ngIf="maxPages>1 &&currentPage<=maxPages-1"
+      (click)="handleClick(currentPage+1)">+</button>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="addQuantity">
+  <button class="changeQuantityBtn" (click)=" lowerQuantity()" [disabled]="quantity<=1">-</button>
+  <input class="quantityInp" [(ngModel)]="quantity" min="1" type="number">
+  <button class="changeQuantityBtn" (click)=" raiseQuantity()">+</button>
+  <div>
+    <button (click)="addToCart()">Add</button>
+  </div>
+</div>

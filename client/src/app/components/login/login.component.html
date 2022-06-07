@@ -1,0 +1,55 @@
+<mat-dialog-content class="dialog">
+  <div class="logIn">
+    <h2 mat-dialog-title>Registerd Customers</h2>
+    <form class="form" [formGroup]="form" novalidate="true" (submit)="logIn()">
+      <div *ngIf="serverError" class="serverError">
+        <mat-icon>warning</mat-icon>
+        <span class="errorMessage">
+          {{serverError}}
+        </span>
+      </div>
+
+      <mat-form-field class="field email" appearance="fill">
+        <mat-label>E-mail</mat-label>
+        <input type="email" matInput formControlName="email">
+        <mat-error [innerHtml]="validatorMessages.required('Email')"
+          *ngIf="email.errors && email.errors['required'] && email?.touched">
+        </mat-error>
+
+        <mat-error *ngIf="email.errors && email.errors['email'] && email?.touched">
+          {{validatorMessages.invalidEmail}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="field lastField password" appearance="fill">
+        <mat-label>password</mat-label>
+        <input type="password" matInput formControlName="password">
+        <mat-error [innerHtml]="validatorMessages.required('Password')"
+          *ngIf="password.errors && password.errors['required'] && password.touched">
+        </mat-error>
+
+        <mat-error *ngIf="password.errors &&
+        password.errors['minlength']&&
+          password.touched">
+          {{validatorMessages.invalidPassword}}
+        </mat-error>
+      </mat-form-field>
+      <button type="submit" class="loginBtn submitBtn">Log In</button>
+    </form>
+  </div>
+
+  <div class="register">
+    <h2 mat-dialog-title>New Customers</h2>
+    <p>If you still don't have a <strong>CASSAS.COM</strong> account,
+      use this option to accsess the registration form.
+    </p>
+    <a class="createAccountBtn" (click)="handleCreateAccountBtn(showComponent)">
+      Create A New Account
+    </a>
+  </div>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon>
+      clear
+    </mat-icon>
+  </button>
+</mat-dialog-content>

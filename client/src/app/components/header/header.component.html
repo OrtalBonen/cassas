@@ -1,0 +1,35 @@
+<mat-toolbar class="header">
+
+  <a class="logo" routerLink="/">
+    <h3>CASSAS</h3>
+  </a>
+  <a class="addProductLink" routerLink="/new-product" *ngIf="sessionService.user?.isAdmin">
+    Add Product
+  </a>
+  <span class="example-spacer"></span>
+  <app-nav-bar></app-nav-bar>
+
+  <div class="headerRight">
+    <button mat-icon-button (click)="openSearchDialog()">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button *ngIf="!sessionService.user" mat-icon-button (click)="openLogInDialog()">
+      <mat-icon>person_outline</mat-icon>
+      <span>LOG IN</span>
+    </button>
+
+    <span *ngIf="sessionService.user">hello {{sessionService.user.firstName}} |</span>
+
+    <button *ngIf="sessionService.user" mat-icon-button (click)="logOut()">
+      <mat-icon>person_outline</mat-icon>
+      <span>LOG OUT</span>
+    </button>
+
+    <button *ngIf="!sessionService.user?.isAdmin" class="cartBtn" mat-icon-button (click)="changeCartStatus()">
+
+      | <mat-icon [matBadge]="cartService.cart?.cartItems.length" matBadgeColor="warn">shopping_cart</mat-icon>
+
+    </button>
+
+  </div>
+</mat-toolbar>

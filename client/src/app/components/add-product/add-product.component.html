@@ -1,0 +1,102 @@
+<div class="page">
+  <h1 mat-dialog-title>Add New Product</h1>
+  <div class="step">
+    <form class="form" [formGroup]="form" novalidate="true" (submit)="addProduct()">
+      <div class=" fields">
+
+        <!-- server error -->
+        <!-- <div *ngIf="serverError" class="serverError">
+        <mat-icon>warning</mat-icon>
+        <span class="errorMessage">
+          {{serverError}}
+        </span>
+      </div> -->
+
+        <mat-form-field class="field " appearance="fill">
+          <mat-label>Name</mat-label>
+          <input type="text" matInput formControlName="name">
+          <mat-error [innerHtml]="validatorMessages.required('Name')"
+            *ngIf="name.errors && name.errors['required'] && name?.touched">
+          </mat-error>
+          <mat-error *ngIf="name.errors && name.errors['minlength'] && name?.touched">
+            Name must contain at least two characters
+          </mat-error>
+          <mat-error *ngIf="name.errors && name.errors['maxlength'] && name?.touched">
+            Name max length is 50 characters
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Department</mat-label>
+          <select matNativeControl formControlName="departmentId">
+            <option [ngValue]="null" disabled>Select Department</option>
+            <option *ngFor="let department of departments" [ngValue]="department.id" selected>{{department.name}}
+            </option>
+          </select>
+          <mat-error [innerHtml]="validatorMessages.required('Department')">
+            *ngIf="departmentId.errors && departmentId.errors['required'] && departmentId?.touched"
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="categories.length" appearance="fill">
+          <mat-label>Category</mat-label>
+          <select matNativeControl formControlName="categoryId">
+            <option [ngValue]="null" disabled>Select Category</option>
+            <option *ngFor="let category of categories" [ngValue]="category.id" selected>{{category.name}}
+            </option>
+          </select>
+          <mat-error [innerHtml]="validatorMessages.required('Category')">
+            *ngIf="categoryId.errors && categoryId.errors['required'] && categoryId?.touched"
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field" appearance="fill">
+          <mat-label>Preview Imag Url</mat-label>
+          <input type="url" matInput formControlName="previewImgUrl">
+          <mat-error [innerHtml]="validatorMessages.required('Preview Img Url')"
+            *ngIf="previewImgUrl.errors && previewImgUrl.errors['required'] && previewImgUrl?.touched">
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field" appearance="fill">
+          <mat-label>Price</mat-label>
+          <input min=1 type="number" matInput formControlName="price">
+          <mat-error [innerHtml]="validatorMessages.required('Price')"
+            *ngIf="price.errors && price.errors['required'] && price?.touched">
+          </mat-error>
+
+          <mat-error *ngIf="price.errors && price.errors['min'] && price?.touched">
+            Price must be number greater than 1
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field" appearance="fill">
+          <mat-label>Quantity</mat-label>
+          <input type="number" matInput formControlName="quantity">
+          <mat-error [innerHtml]="validatorMessages.required('Quantity')"
+            *ngIf="quantity.errors && quantity.errors['required'] && quantity?.touched">
+          </mat-error>
+          <mat-error *ngIf="quantity.errors && quantity.errors['pattern'] && quantity?.touched">
+            Quantity must be an integer
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Color</mat-label>
+          <select matNativeControl formControlName="colorId">
+            <option [ngValue]="null" disabled>Select Color</option>
+            <option *ngFor="let color of colors" [ngValue]="color.id" selected>{{color.name}}</option>
+          </select>
+          <mat-error [innerHtml]="validatorMessages.required('Color')"
+            *ngIf="colorId.errors && colorId.errors['required'] && colorId?.touched">
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="buttons">
+        <button class="saveBtn" type="submit">Save</button>
+      </div>
+    </form>
+    <button class="cancelBtn" (click)="resetForm()">Reset</button>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(249, 245, 245);
+  padding: 0 32px;
+}
+
+span {
+  font-size: 14px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+a {
+  color: rgb(54, 54, 54);
+}
+
+.addProductLink {
+  font-size: 16px;
+}
+
+.mat-focus-indicator.mat-icon-button.mat-button-base {
+  display: inline;
+}
+
+.mat-icon-button.cartBtn {
+  width: 20px;
+  margin-left: 38px;
+}
+
+.border {
+  width: 1px;
+  height: 100%;
+  color: black;
+}

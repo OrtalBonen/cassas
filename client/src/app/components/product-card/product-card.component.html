@@ -1,0 +1,24 @@
+<div *ngIf="product" class="card">
+  <div class="main">
+    <img [src]="selectedProductOption.previewImgUrl" [alt]="product.name">
+
+    <button class="add" *ngIf="!sessionService.user?.isAdmin" (click)="addToCart()">
+      <p class="hide">Add to cart</p>
+    </button>
+
+    <button class="add" *ngIf="sessionService.user && sessionService.user.isAdmin" (click)="edit()">
+      <p class="hide">Edit</p>
+    </button>
+
+  </div>
+  <p class="name">{{product.name}}</p>
+  <p class="price" *ngIf="product.productOptions?.length">{{selectedProductOption.price | currency}}</p>
+  <div class="colors" *ngIf="product.productOptions?.length > 1">
+
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedProductOption">
+      <mat-radio-button *ngFor="let option of product.productOptions" [value]="option">
+        {{option.colorName}} </mat-radio-button>
+    </mat-radio-group>
+
+  </div>
+</div>

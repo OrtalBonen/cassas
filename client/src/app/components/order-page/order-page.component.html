@@ -1,0 +1,116 @@
+<div class="page">
+  <div class="orderSummary">
+    <h2 class="title">Order Summary</h2>
+    <div class="order" *ngIf="sessionService.user && cartService.cart?.cartItems.length">
+      <div class="headerCart">
+        <div class="div">
+          <span class="totalItems">{{cartService.cart.cartItems.length}}
+            {{cartService.cart.cartItems.length > 1 ? " Items" : " Item"}}
+          </span>
+          <span>Total: {{cartService.cartTotalPrice | currency}}</span>
+        </div>
+
+        <div class="searchBox">
+          <button class="searchBtn">
+            <mat-icon>search</mat-icon>
+          </button>
+          <input class="searchInput" type="text" [(ngModel)]="searchProducrInp" placeholder="Search product">
+        </div>
+      </div>
+      <div class="wrapperItems">
+
+        <div class="items">
+          <div class="item" *ngFor="let item of cartService.cart.cartItems">
+            <div class="imgContainer">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0358/6067/6667/products/6fbc91b0d781881ebffcdb07b705b608_1800x1800.jpg?v=1623333107"
+                alt="">
+            </div>
+            <div class="details">
+              <div class="name" [innerHTML]="item.name  |markSearchResult: searchProducrInp"></div>
+              <div *ngIf="item.colorId!=2">{{item.colorName}}</div>
+              <div class="itemPrice">{{item.price |currency}}*{{item.quantity}}</div>
+              <div class="totalItem">{{item.totalPrice |currency}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="payment">
+    <h2 class="title">Order</h2>
+    <form class="form" [formGroup]="form" novalidate="true" (submit)="placeOrder()">
+      <div class="shippingBox">
+        <h3 class="formTitle">Shipping Details</h3>
+
+        <mat-form-field appearance="fill">
+          <mat-label>City</mat-label>
+          <select matNativeControl formControlName="cityId">
+            <option [ngValue]="null" disabled>Select City</option>
+            <option *ngFor="let city of cities" [ngValue]="city.id" selected>{{city.name}}</option>
+          </select>
+
+          <mat-error [innerHtml]="validatorMessages.required('City')"
+            *ngIf="cityId.errors && cityId.errors['required'] && cityId?.touched">
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field " appearance="fill">
+          <mat-label> Street</mat-label>
+          <input type="text" matInput formControlName="street">
+          <mat-error [innerHtml]="validatorMessages.required('Street')"
+            *ngIf="street.errors && street.errors['required'] && street?.touched">
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field  lastField" appearance="fill">
+          <mat-label> Street Number</mat-label>
+          <input type="text" matInput formControlName="streetNumber">
+          <mat-error [innerHtml]="validatorMessages.required('Street Number')"
+            *ngIf="streetNumber.errors && streetNumber.errors['required'] && streetNumber?.touched">
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Delivery Date</mat-label>
+          <input #date matInput [min]="today" [matDatepicker]="picker" formControlName="deliveryDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error [innerHtml]="validatorMessages.required('Delivery Date')"
+            *ngIf="deliveryDate.errors && deliveryDate.errors['required'] && deliveryDate?.touched">
+          </mat-error>
+          <mat-error *ngIf="deliveryDate.errors && deliveryDate.errors['isDateConfirmed'] && deliveryDate?.touched">
+            Delivery Date is not available
+          </mat-error>
+        </mat-form-field>
+
+
+
+
+
+      </div>
+
+      <div class="paymentBox">
+        <h3 class="formTitle">Payment</h3>
+
+        <mat-form-field class="field  lastField" appearance="fill">
+          <mat-label>Credit Card</mat-label>
+          <input type="text" matInput formControlName="creditCardNumber">
+          <mat-error [innerHtml]="validatorMessages.required('Credit Card')"
+            *ngIf="creditCardNumber.errors && creditCardNumber.errors['required'] && creditCardNumber?.touched">
+          </mat-error>
+
+          <mat-error *ngIf="creditCardNumber.errors && creditCardNumber.errors['pattern'] && creditCardNumber?.touched">
+            Credit Card number is not valid
+          </mat-error>
+        </mat-form-field>
+        <button type="submit" class="orderBtn">Order</button>
+      </div>
+
+
+
+    </form>
+  </div>
+</div>

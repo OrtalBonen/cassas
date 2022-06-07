@@ -1,0 +1,153 @@
+<button mat-icon-button (click)="handleCreateAccountBtn(showComponent)">
+  <mat-icon>keyboard_arrow_left</mat-icon>
+</button>
+
+<button mat-icon-button mat-dialog-close class="closeBtn">
+  <mat-icon>
+    clear
+  </mat-icon>
+</button>
+<mat-dialog-content *ngIf="registerStep === 1" class="dialog">
+  <div class="step">
+    <h2 mat-dialog-title>Create your Cassas Account</h2>
+    <form class="form" [formGroup]="registerFormOne" novalidate="true" (submit)="registerStepOne()">
+      <div class="fields">
+
+        <div *ngIf="serverError" class="serverError">
+          <mat-icon>warning</mat-icon>
+          <span class="errorMessage">
+            {{serverError}}
+          </span>
+        </div>
+
+        <mat-form-field class="field " appearance="fill">
+          <mat-label>ID</mat-label>
+          <input type="text" matInput formControlName="israeliId">
+          <mat-error [innerHtml]="validatorMessages.required('ID')"
+            *ngIf="israeliId.errors && israeliId.errors['required'] && israeliId?.touched">
+          </mat-error>
+          <mat-error *ngIf="israeliId.errors && israeliId.errors['israeliIdExist'] && israeliId?.touched">
+            ID already exists
+          </mat-error>
+          <mat-error *ngIf="israeliId.errors && israeliId.errors['israeliId'] && israeliId?.touched">
+            {{validatorMessages.invalidIsraeliId}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field email" appearance="fill">
+          <mat-label>E-mail</mat-label>
+          <input type="email" matInput formControlName="email">
+          <mat-error [innerHtml]="validatorMessages.required('Email')"
+            *ngIf="email.errors && email.errors['required'] && email?.touched">
+          </mat-error>
+
+          <mat-error *ngIf="email.errors && email.errors['email'] && email?.touched">
+            {{validatorMessages.invalidEmail}}
+          </mat-error>
+
+          <mat-error *ngIf="email.errors && email.errors['emailExists'] && email?.touched">
+            Email already Exists
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field password" appearance="fill">
+          <mat-label>password</mat-label>
+          <input type="password" matInput formControlName="password">
+          <mat-error [innerHtml]="validatorMessages.required('Password')"
+            *ngIf="password.errors && password.errors['required'] && password.touched">
+          </mat-error>
+
+          <mat-error *ngIf="password.errors &&
+        password.errors['minlength']&&
+          password.touched">
+            {{validatorMessages.invalidPassword}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field lastField password" appearance="fill">
+          <mat-label>Password Confirm</mat-label>
+          <input type="password" matInput formControlName="passwordConfirm">
+          <mat-error [innerHtml]="validatorMessages.required('Password Confirm')"
+            *ngIf="passwordConfirm.errors && passwordConfirm.errors['required'] && passwordConfirm.touched">
+          </mat-error>
+          <mat-error *ngIf="passwordConfirm.errors &&
+          passwordConfirm.errors['confirmPasswordValidator'] &&
+          passwordConfirm.touched">
+            Passsword and Confirm Password didn't match
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="buttons">
+        <button type="submit" class="nextBtn submitBtn">Next</button>
+      </div>
+
+    </form>
+  </div>
+
+</mat-dialog-content>
+<!-- ================================================================== -->
+<!-- step two -->
+<mat-dialog-content class="dialog" *ngIf="registerStep === 2">
+  <div class="step">
+    <h2 mat-dialog-title>Create your Cassas Account</h2>
+    <form class="form" [formGroup]="registerFormTwo" novalidate="true" (submit)="registerStepTwo()">
+
+      <div class="fields">
+        <!-- server error -->
+        <div *ngIf="serverError" class="serverError">
+          <mat-icon>warning</mat-icon>
+          <span class="errorMessage">
+            {{serverError}}
+          </span>
+        </div>
+
+        <mat-form-field class="field " appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input type="text" matInput formControlName="firstName">
+          <mat-error [innerHtml]="validatorMessages.required('First Name')"
+            *ngIf="firstName.errors && firstName.errors['required'] && firstName?.touched">
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field " appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input type="text" matInput formControlName="lastName">
+          <mat-error [innerHtml]="validatorMessages.required('Last Name')"
+            *ngIf="lastName.errors && lastName.errors['required'] && lastName?.touched">
+          </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill">
+          <mat-label>City</mat-label>
+          <select matNativeControl formControlName="cityId">
+            <option [ngValue]="null" disabled>Select City</option>
+            <option *ngFor="let city of cities" [ngValue]="city.id" selected>{{city.name}}</option>
+          </select>
+          <mat-error [innerHtml]="validatorMessages.required('City')"
+            *ngIf="cityId.errors && cityId.errors['required'] && cityId?.touched">
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field " appearance="fill">
+          <mat-label> Street</mat-label>
+          <input type="text" matInput formControlName="street">
+          <mat-error [innerHtml]="validatorMessages.required('Street')"
+            *ngIf="street.errors && street.errors['required'] && street?.touched">
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field  lastField" appearance="fill">
+          <mat-label> Street Number</mat-label>
+          <input type="text" matInput formControlName="streetNumber">
+          <mat-error [innerHtml]="validatorMessages.required('Street Number')"
+            *ngIf="streetNumber.errors && streetNumber.errors['required'] && streetNumber?.touched">
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="buttons">
+        <button type="submit" class="nextBtn submitBtn">Create New Account</button>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
